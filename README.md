@@ -45,7 +45,25 @@ A repo devoted to all things for data science, ML, NLP and Gen AI on databricks
 
 ## Databricks Data Intelligence Platform
 * Built upon the Lakehouse paradigm (data lake + data warehouse).
-* The architecture of the full platform (source: Databricks):
+* The architecture of the full platform (source: Databricks) as seen below. 
 
 ![Screenshot (3)](https://github.com/user-attachments/assets/d3a345bd-bfdd-4666-9085-f77e2bf13e0c)
+
+
+### Data storage and governance
+1. Cloud Storage
+   * All 3 major clouds (e.g. AWS, Azure, GCP) are supported by:
+     a. Delta Lake
+     b. Unity Catalog
+
+2. Delta Sharing
+   * Marketplace
+   * Clean Rooms
+  
+
+### Unity Catalog
+* Unifies data and AI governance across the platform.
+* Image below from Databricks.
+
+![Screenshot (4)](https://github.com/user-attachments/assets/6ae536a4-a325-45f8-8aed-622bedb2dc21)
 
