@@ -141,3 +141,68 @@ A repo devoted to all things for data science, ML, NLP and Gen AI on databricks
 
 ![Screenshot (6)](https://github.com/user-attachments/assets/4cc28616-595f-4058-89c0-8e6b6f22c2f3)
 
+
+---
+# Machine Learning on Databricks
+* The entire Machine Learning lifecycle is supported on Databricks including:
+1. Data ingestion & prepration (ETL)
+2. Exploratory Data Analysis (EDA)
+3. Feature Engineering
+4. Model Training
+5. Model Validation
+6. Model Deployment
+7. Model Monitoring
+   * DB provides a data-centric approach to this.
+   * Calculations for **profile metrics** and **drift metrics** among others.
+   * Ability to visualize metrics and tracings.
+
+
+## Machine Learning Ready Delta Lake
+* Key Features:
+
+1. ACID transactions
+2. Schema enforcement
+3. Binary file support
+4. Unified Batch & Streaming data
+5. Time travel & Data "snapshots"
+
+## Databricks Machine Learning Runtime
+* Pre-built infrastructure management on Databricks, including:
+1. Optimized and pre-configured Machine Learning frameworks
+2. Turnkey distributed Machine Learning
+3. Built-in AutoML and Hyperparameter Tuning
+   * AutoML
+   * Optuna
+4. GPU support out of the box (e.g. hardware accelerators)
+   * NVIDIA cuda
+
+
+## Unity Catalog - Unified Machine Learning Lifecycle Security
+* The Unity Catalog provides comprehensive data governance.
+* There is **Single Governance** for data and AI assets including all below.
+* The concept is to track your data from **raw ingestion to feature engineering to model training to deployment**.
+
+1. Centralized access control
+2. Auditing
+3. Data Lineage
+   * Tables
+   * Features
+   * Models
+   * Workflows
+4. Discovery
+5. Cross workspace asset sharing
+
+
+## Databricks Feature Store
+* This framework solves 2 big data problems:
+1. Reusability & Discoverability of data
+   * Feature store automatically tracks data lineage including feature engineering & code versions.
+   * Lineage based search and consistency is seamless.
+   * MLFlow allows historical lookup of model features and performance. 
+2. Eliminating ONLINE vs. OFFLINE skew
+   * All models on Databricks are packaged with their respective feature stores making it easier to make changes and monitor over time rather than having to track down ONLINE vs. OFFLINE issues. 
+
+* The chart below is from Databricks:
+
+![Screenshot (7)](https://github.com/user-attachments/assets/dad6d828-f433-4c80-89c5-8b5b0b8b7377)
+
