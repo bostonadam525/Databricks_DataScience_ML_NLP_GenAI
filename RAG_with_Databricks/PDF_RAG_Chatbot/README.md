@@ -53,6 +53,14 @@
              3. Go to "Create" button on upper right corner.
              4. Click "Create Vector Search Index".
              5. Follow steps on GUI to create the Vector Search Index:
+                * Name
+                * Primary Key (id)
+                * Vector Endpoint (what we just created)
+                * Compute Embeddings (or use existing embeddings if you pre-created them)
+                * Embedding Source Column (e.g. Text)
+                * Embedding model of choice: `databricks-gte-large-en`
+                * Sync mode --> `Triggered` vs. `Continuous` (Choose triggered depending on your needs)
+             6. Create the Vector index/embeddings
                 
     
 4. **Retriever**
