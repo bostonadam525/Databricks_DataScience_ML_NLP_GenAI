@@ -61,6 +61,9 @@
                 * Embedding model of choice: `databricks-gte-large-en`
                 * Sync mode --> `Triggered` vs. `Continuous` (Choose triggered depending on your needs)
              6. Create the Vector index/embeddings
+        * e. You can then run a test query on the Vector endpoint using the embeddings once it is created.
+           1. This will give you a demo of the most similar documents or text chunks that will be retrived based on your similarity metric.
+           2. This is NOT the same as what the final chatbot looks like but it is looking "under the hood" of RAG based retrieval using your embeddings. 
                 
     
 4. **Retriever**
