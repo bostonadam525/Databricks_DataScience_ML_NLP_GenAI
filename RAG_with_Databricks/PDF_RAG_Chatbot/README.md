@@ -64,7 +64,9 @@
         * e. You can then run a test query on the Vector endpoint using the embeddings once it is created.
            1. This will give you a demo of the most similar documents or text chunks that will be retrived based on your similarity metric.
            2. This is NOT the same as what the final chatbot looks like but it is looking "under the hood" of RAG based retrieval using your embeddings. 
-                
+
+            ![Screenshot (9)](https://github.com/user-attachments/assets/08a93691-b10d-48a5-bdab-06fba4b69a39)
+
     
 4. **Retriever**
    * RAG retriever created using LangChain API, Prompt Template.
