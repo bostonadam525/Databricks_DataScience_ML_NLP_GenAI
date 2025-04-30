@@ -17,10 +17,10 @@
    * The Unity Catalog (UC) volume is a way to manage and govern non-tabular data, such as images, audio, or PDF files, within the Unity Catalog.
    * [Unity Catalog Volumes](https://docs.databricks.com/aws/en/volumes)
    * Steps to recreate:
-       * a. Need to create a new schema within the **Catalog** space. You can name it anything you want. Let's say I named it **"LLM_RAG_demos".**
-       * b. Next, you want to create another specific schema within this a **volume**. You can name it anything you want, let's say I named it "pdf_rag_dbrx".
-       * c. Upload PDF file(s) to unity catalog volume.
-       * d. Run notebook 1 --> this will create 2 blank tables in the unity catalog. 
+       1. Need to create a new schema within the **Catalog** space. You can name it anything you want. Let's say I named it **"LLM_RAG_demos".**
+       2. Next, you want to create another specific schema within this a **volume**. You can name it anything you want, let's say I named it "pdf_rag_dbrx".
+       3. Upload PDF file(s) to unity catalog volume.
+       4. Run notebook 1 --> this will create 2 blank tables in the unity catalog. 
   
 
 2. **Extract --> Chunk --> Load**
