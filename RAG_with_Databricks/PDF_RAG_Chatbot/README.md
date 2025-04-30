@@ -75,9 +75,35 @@
    * LLM used for inference will be the `Databricks-dbrx-instruct` endpoint.
   
 6. **Register to Unity Catalog**
+   * During this step run notebook 3.
+   * During this step we register each model run within mlflow for tracking purposes. 
 
 7. **Model Serving Endpoint**
    * Create this endpoint for real-time inference.
+   * To do this:
+     * 1. Go to "Serving" under Maching Learning Workspace. You can also do this by going to where the model was registered in the Unity Catalog and Create Serving Endpoint from there.
+       2. Create Serving Endpoint.
+       3. Select model version from mlflow tracking.
+       4. Select compute type (cpu vs. GPU)
+       5. Set token if using token.
+       6. It should look like this (source: Databricks)
+
+      ![Screenshot (10)](https://github.com/user-attachments/assets/1603b0ef-7711-4528-9675-5d97efd51414)
+
   
-8. **Operationalization**
-   * How to keep vector store/index updated and avoid model drift and outdated information in the RAG pipeline. 
+
+8. **Inference on Endpoint**
+   * Now we can query/run inference on the endpoint once it is served.
+  
+    
+9. **Operationalization**
+   * How to keep vector store/index updated and avoid model drift and outdated information in the RAG pipeline.
+   * The purpose is to keep your data updated periodically.
+   * To do this:
+     1. Go to "Data Engineering Tab".
+     2. Create Job.
+     3. Add Trigger -- everytime we add a new document to the data ingestion and delta tables it will update the DLT pipeline.
+     4. Scheduling -- you can schedule this for recurring updates at a specific time (e.g. midnight everyday, etc.)
+
+10. **Create a GUI**
+    * You can create a simple GUI in Databricks. 
