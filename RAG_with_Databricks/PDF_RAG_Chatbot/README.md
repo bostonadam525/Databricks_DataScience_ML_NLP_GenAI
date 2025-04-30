@@ -39,9 +39,9 @@
 3. **Vector Store Index and Endpoint**
    * There are multiple parts to this which we will list below.
    * The best way to do this is to first create the vector endpoint --> then create the vector embeddings & index
-     a. Using an open source embedding model from the Databricks catalog.
-     b. Create a **Vector Search endpoint.**
-     c. Steps to create a **Vector Store endpoint:**
+       * Using an open source embedding model from the Databricks catalog.
+       * Create a **Vector Search endpoint.**
+       * Steps to create a **Vector Store endpoint:**
          * 1. Go to `compute`.
          * 2. Go to `vector search`.
            3. Create endpoint --> name the endpoint --> click create
