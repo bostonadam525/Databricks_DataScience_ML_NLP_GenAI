@@ -59,8 +59,9 @@ A repo devoted to all things for data science, ML, NLP and Gen AI on databricks
 2. Delta Sharing
    * Marketplace
    * Clean Rooms
-  
 
+
+---
 ### Unity Catalog
 * Unifies data and AI governance across the platform.
 * Allows data sharing between:
@@ -138,6 +139,7 @@ A repo devoted to all things for data science, ML, NLP and Gen AI on databricks
 2. Metastore assignment
    * Multiple metastores can be assigned to multiple workspaces in the Databricks environment.
    * This gives the architectural breakdown of catalog --> schema --> table access based on a Metastore (source: Databricks)
+   * User Groups can be assigned such as: Data Sci, Data eng, AI eng, etc...
 
 ![Screenshot (6)](https://github.com/user-attachments/assets/4cc28616-595f-4058-89c0-8e6b6f22c2f3)
 
@@ -200,9 +202,61 @@ A repo devoted to all things for data science, ML, NLP and Gen AI on databricks
    * Lineage based search and consistency is seamless.
    * MLFlow allows historical lookup of model features and performance. 
 2. Eliminating ONLINE vs. OFFLINE skew
-   * All models on Databricks are packaged with their respective feature stores making it easier to make changes and monitor over time rather than having to track down ONLINE vs. OFFLINE issues. 
+   * All models on Databricks are packaged with their respective feature stores making it easier to make changes and monitor over time rather than having to track down ONLINE vs. OFFLINE issues.
 
 * The chart below is from Databricks:
 
 ![Screenshot (7)](https://github.com/user-attachments/assets/dad6d828-f433-4c80-89c5-8b5b0b8b7377)
+
+---
+# Table Storage - Managed vs. External
+1. **Managed Tables**
+   - Databricks manages both metadata and actual storage of data
+   - Multi-tool access: Difficult
+   - Data governance: Unity catalog controls everything
+   - Use case: Quick analytics, fully governed data
+
+2. **External Tables**
+   - Databricks manages ONLY metadata
+   - Multi-tool access: EASY
+   - Data governance: Flexible but requires discipline
+   - Use case: Data shared with other tools or pre-existing datasets (e.g. historical data)
+
+---
+# Medallion Architecture
+- Data design pattern used to logically organize data in a LAKEHOUSE with goal of incrementally and progressively improving structure and quality of data as it flows through each layer.
+- Lakehouse = Data Lake + Data Warehouse
+- Architecture Flow: `Bronze --> Silver --> Gold` layer tables
+- Medallion architectures are also known as "multi-hop" architectures.
+- Image below is from [Databricks](https://www.databricks.com/blog/what-is-medallion-architecture)
+
+<img width="2288" height="1100" alt="image" src="https://github.com/user-attachments/assets/822cc4c9-c92b-410b-8226-3d01b729c651" />
+
+## OLAP vs OLTP
+- OLAP: online analytical processing
+- OLTP: online transaction processing
+- **Purpose:**
+  - OLTP processes day-to-day operations like payments and user signups;
+  - OLAP handles complex queries, trends, and reporting.
+- **Data Storage:**
+  - OLTP uses row-oriented storage for fast writes;
+  - OLAP uses column-oriented storage for fast aggregations.
+- **Schema Design:**
+  - OLTP uses normalized models (like 3NF) to ensure data integrity;
+  - OLAP uses denormalized models (like star schemas) to speed up reads.
+- **Response Time:**
+  - OLTP responds in milliseconds;
+  - OLAP queries take seconds to minutes across massive data scans.
+- **Examples:**
+  - OLTP databases include PostgreSQL and MySQL;
+  - OLAP systems include ClickHouse, Snowflake, BigQuery, Lakehouse
+
+## Basic flow of data through the layers:
+  - BRONZE layer: OLTP system sends BATCH + STREAMING data for raw integration
+    - "messy data"
+  - SILVER layer --> data cleaning, filtering, augmentation
+    - "cleaning + feature engineering"
+  - GOLD layer: Business level aggregation metrics
+    - KPIs
+    - Analytical insights
 
