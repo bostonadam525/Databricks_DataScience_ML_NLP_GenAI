@@ -37,3 +37,13 @@
 4. **Gateway**
    - Allows you to control + audit LLM and agentic access to your system.
    - See docs: https://mlflow.org/docs/latest/genai/governance/ai-gateway/
+
+---
+# LLM Experiment Tracking
+- MLflow can be used to track multiple LLM experiments at the same time. This includes but is not limited to:
+
+1. LLM params and metrics
+2. Model configurations comparison
+3. Cost tracking/analysis
+4. Organizing experiments in parallel
+5. Parent-child runs
