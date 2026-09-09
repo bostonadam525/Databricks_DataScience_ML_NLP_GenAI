@@ -13,3 +13,27 @@
 
 
 <img width="2500" height="1406" alt="image" src="https://github.com/user-attachments/assets/1fce5687-a868-488e-9367-06ca28d48dab" />
+
+
+- Pillars of MLflow Observability Above
+
+1. **Tracing**
+   - Allows you to trace all inputs and outputs to your system and find bottlenecks and issues.
+
+2. **Evaluation**
+   - Human in the loop feedback
+   - [LLM as a judge multiple configurations:](https://docs.databricks.com/aws/en/mlflow3/genai/eval-monitor/concepts/scorers)
+     - Built in judges
+     - Custom judges
+     - Code-based scorers
+     - 3rd party scorers
+    
+
+3. **Prompt Registry**
+   - Track prompts + optimize them with version control.
+   - Track agent parameters
+   - See docs: https://docs.databricks.com/aws/en/mlflow3/genai/prompt-version-mgmt/prompt-registry/
+
+4. **Gateway**
+   - Allows you to control + audit LLM and agentic access to your system.
+   - See docs: https://mlflow.org/docs/latest/genai/governance/ai-gateway/
