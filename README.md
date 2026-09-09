@@ -260,3 +260,16 @@ A repo devoted to all things for data science, ML, NLP and Gen AI on databricks
     - KPIs
     - Analytical insights
 
+---
+# ACID Transactions in Databricks
+- ACID stands for:
+  - A = Atomicity
+  - C = Consistency
+  - I - Isolation
+  - D - Durability
+
+
+- **Atomicity --> all steps succeed or fail together not in isolation!**
+- **Consistency --> transactions move the database from 1 valid state to another maintaining all defined rules and constraints.**
+- **Isolation --> concurrent transactions don't interfere with each other. Each transaction feels like its running alone.**
+- **Durability --> once a transaction is committed it stays committed**
