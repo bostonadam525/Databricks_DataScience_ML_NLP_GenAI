@@ -54,3 +54,102 @@
 - `mlflow.log_*` explicit calls should still be used for things such as: tags, custom artifacts
 - Comparing different LLM configurations
 - Experiment organization techniques and practices
+
+---
+# Tracing
+- See docs: https://mlflow.org/docs/latest/genai/concepts/trace/
+
+## Important Distinction about Tracing:
+- Could be 1 request
+- Could be end to end workflow
+- Most traces are composed of 1 or more "spans" and usually start with a root span. 
+
+## Problem
+- Traditional experiment tracking and logging isn't enough for LLM applications:
+```
+# Traditional logging - hard to debug
+print("Calling LLM...")
+response = llm.generate(prompt)
+print(f"Response: {response}")
+# What happened inside? How long did it take? What was sent or received?
+```
+
+## Solution: Use Distributed Tracing
+- Tracing captures the complete execution flow of your application as we see below.
+- There may be 3 separate spans or actions in a RAG application that we can trace each unit of operation. 
+
+```
+Trace: RAG Application
+├── Span 1: Embed Query [0ms - 200ms]
+│   Input: "What is MLflow for GenAI?"
+│   Output: [0.123, 0.456, ...]
+│   
+├── Span 2: Retrieve Documents [200ms - 350ms]
+│   Input: [0.123, 0.456, ...]
+│   Output: ["MLflow is...", "The platform..."]
+│   
+└── Span 3: Generate Response [350ms - 1500ms]
+    Input: {query, documents}
+    Output: "MLflow is an open source ML and GenAI platform..."
+    LLM: gpt-5-mini
+    Tokens: 150
+```
+
+## Key Benefits
+1. Visibility: see every step in your LLM workflow
+2. Performance: identify bottlenecks and latency issues
+3. Debugging: trace errors to their exact source
+4. Cost: track token usage per operation
+5. Quality: inspect inputs/outputs at each step
+
+
+## Trace Data Model
+
+### Trace: A complete execution of an operation
+- Represents one request or workflow
+- Contains one or more spans
+- **Has a root span**
+
+### Span: A single operation within a trace
+- Has a start and end time
+- Contains inputs and outputs
+- Has metadata (model, tokens, latency, etc.)
+- Can have parent-child relationships
+
+## Span Attributes: Additional metadata
+- Model name
+- Token counts
+- Temperature
+- Custom attributes
+
+### Span Types
+- MLflow defines standard span types:
+
+```
+CHAIN: A sequence of operations
+LLM: Language model call
+RETRIEVER: Document retrieval
+EMBEDDING: Text embedding
+TOOL: Tool/function execution
+AGENT: Agent reasoning
+PARSER: Output parsing or generic intermediate parsing of a result
+```
+
+### Span Hierarchy Example 
+- chained or sequential operations....
+
+```
+TRACE (root)
+│
+└─ SPAN: Agent Executor (AGENT)
+   │
+   ├─ SPAN: Planning Step (LLM)
+   │  └─ attributes: {model: gpt-5, tokens: 50}
+   │
+   ├─ SPAN: Tool Execution (TOOL)
+   │  └─ attributes: {tool: search, query: "..."}
+   │
+   └─ SPAN: Final Response (LLM)
+      └─ attributes: {model: gpt-5, tokens: 150}
+
+```
