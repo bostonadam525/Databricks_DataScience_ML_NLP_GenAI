@@ -47,3 +47,10 @@
 3. Cost tracking/analysis
 4. Organizing experiments in parallel
 5. Parent-child runs
+   - hierarchical runs
+
+## Key techniques to use:
+- `mlflow.openai.autolog()` is able to capture model parameters, tokens, latency, and input/output automatically
+- `mlflow.log_*` explicit calls should still be used for things such as: tags, custom artifacts
+- Comparing different LLM configurations
+- Experiment organization techniques and practices
