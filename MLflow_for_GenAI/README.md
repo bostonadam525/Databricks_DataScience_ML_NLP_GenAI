@@ -153,3 +153,148 @@ TRACE (root)
       └─ attributes: {model: gpt-5, tokens: 150}
 
 ```
+---
+# Custom tracking for Complex Workflows
+- Above we mentioned how you can use `mlflow.autolog()` out of the box for tracking. However, in real-world models and Gen AI applications such as RAG and Agents, you will want to implement custom tracing.[
+- See mlflow manual tracing docs: https://mlflow.org/docs/latest/genai/tracing/app-instrumentation/manual-tracing/
+
+## Overview of Manual Tracing
+- When do we use manual tracing vs. autologging?
+- How to use `@mlflow.trace` decorator with arguments
+- Create custom spans with proper types
+- Add custom attributes to spans
+- Trace agentic workflows with tool usage
+- Trace RAG pipelines end-to-end
+- Advanced debugging techniques
+- How to leverage claude code assistant for quick on the fly debugging
+
+## Autologging is great for:
+- LLM API calls (OpenAI, Anthropic, Gemini, etc.)
+- Integrated framework chains (LangChain, LlamaIndex, LangGraph, etc.)
+- Quick prototyping and POCs 
+- Standard workflows
+
+## Manual tracing is needed for:
+- Custom functions in your pipeline
+- Domain-specific operations (parsing, validation, business logic, etc...)
+- Custom retrievers or custom data sources
+- External API calls that aren't auto-instrumented
+- Adding additional context not captured automatically
+- Organizing operations into logical groups
+
+### Best practice: combine both!
+- Enable `autolog` early in the code
+- Enable a custom trace
+```
+# Use autologging for LLM calls
+mlflow.openai.autolog()
+
+# Add manual tracing for custom logic
+@mlflow.trace(name="custom_code", span_type=SPAN_TYPE)
+def my_custom_function(query):
+    # Your custom code
+    pass
+```
+---
+Manual Tracing with Span Types
+
+The `@mlflow.trace` decorator turns any function into a traced span. You control the **name** and **type** of each span, which makes traces searchable and visually organized in the MLflow UI.
+
+### Standard Span Types to use for Manual Tracing
+
+| Type | Use for |
+|------|---------|
+| `CHAIN` | A sequence of operations (parent wrapper) |
+| `LLM` | Language model call |
+| `CHAT_MODEL` | A query to a chat model — a special case of an LLM interaction |
+| `RERANKER` | A re-ranking operation, ordering retrieved contexts by relevance |
+| `MEMORY` | A memory operation, such as persisting context in a long-term memory DB |
+| `RETRIEVER` | Document retrieval |
+| `EMBEDDING` | Text embedding |
+| `TOOL` | Tool/function execution -- custom or external API/database |
+| `AGENT` | Agent reasoning / planning |
+| `PARSER` | Output parsing or business logic -- can also be used to mask PII data |
+
+### Code to implement
+- We can see there are 2 arguments to use for this:
+1. name
+2. `span_type` from list above
+
+```python
+# Always provide name and span_type
+@mlflow.trace(name="my_retriever", span_type="RETRIEVER")
+def my_function(x): ...
+```
+
+## When to Add Custom Attributes
+- You would usually add attributes for:
+   - Configuration (top_k, model_name)
+   - Performance metrics (num_results, cache_hit)
+   - Data characteristics (query_length, doc_size)
+   - Business logic (user_tier, feature_flags)
+   - Debugging info (data_source, version)
+- These all make traces searchable and analyzable.
+
+
+## Agent Tracing Benefits
+- For agentic workflows, custom tracing reveals:
+
+   - Insight into Decision making: which tool was chosen, and why
+   - Tool performance: how long each tool takes
+   - Error tracking: which tool failed, why and how
+   - Cost analysis: how many LLM calls per agent run
+   - Optimization: whether any steps can be skipped
+- This is what makes complex agents debuggable.
+
+
+## Why Hierarchical RAG Tracing Matters
+- Within a single RAG trace you can immediately examine every span and answer:
+
+   - Which step is slowest? (compare span durations in the timeline)
+   - What did the query parser extract? (inspect parse_query inputs/outputs)
+   - Which documents were retrieved? (check vector_search output)
+   - How many tokens did the answer cost? (tokens_used attribute on generate_answer)
+   - Where did it fail? (the failed span is highlighted, and all attributes logged before the error are preserved)
+
+ ---
+ # Performance Analysis
+ In the MLflow UI, you can:
+
+1. Timeline View
+   - See which operations take the most time
+   - Identify serial vs parallel operations
+   - Find bottlenecks visually
+
+2. Aggregate Metrics
+   - Average latency per span type
+   - P50, P95, P99 latencies
+   - Success rate per operation
+
+3. Comparison
+   - Compare traces before/after optimization
+   - A/B test different implementations
+   - Track performance over time
+
+4. Optimization Strategies
+- If retrieval is slow:
+
+   - Check embedding generation time
+   - Optimize vector search
+   - Optimize prompt with GEPA
+- If LLM calls are slow:
+
+   - Reduce max_tokens
+   - Use streaming responses
+   - Try smaller models to reduce latency or curb costs
+
+- If overall latency is high:
+
+   - Parallelize independent operations
+   - Cache frequent queries
+   - Optimize prompt length
+
+5. Metrics to Track
+   - End-to-end latency
+   - Per-operation latency
+   - Token usage and cost
+   - Error rate
