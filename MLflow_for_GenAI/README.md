@@ -366,3 +366,14 @@ prompt = mlflow.genai.register_prompt(
 3. **Experimentation: Systematic A/B testing**
 4. **Version Control: Track prompt evolution with commit messages**
 5. **Data Governance: Audit and approval processes via aliases**
+---
+## Prompt Templates
+- Note: The Prompt Registry in MLflow uses **Jinja2 syntax** `{{variable}}` for template variables instead of Python's standard `{variable}` format strings.
+- Steps to register a prompt:
+
+1. Use `mlflow.genai.register_prompt()` function
+2. Add prompt metadata including: name, template, commit message with tags for version control
+3. Register prompt
+4. Fill template with prompt
+5. Call LLM and test prompt
+
