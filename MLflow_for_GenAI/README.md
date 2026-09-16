@@ -298,3 +298,71 @@ def my_function(x): ...
    - Per-operation latency
    - Token usage and cost
    - Error rate
+---
+# Prompt Registry
+- This is a VERY important part of MLflow for Gen AI use cases.
+- These are things that you can do with Prompt Registy:
+
+1. Why the Prompt Registry solves prompt management problems
+
+2. Registering prompts with `mlflow.genai.register_prompt()`
+
+3. Using Jinja2 {{ variable }} templates
+
+4. Versioning prompts with commit messages
+
+5. Using the Registry as a shared team library
+
+6. Aliases (@production, @staging) for safe deployments
+
+7. Searching prompts across your organization
+
+## Why should you manage and register prompts?
+
+### The Problem -- Without proper PROMPT management:
+
+- **Scattered prompts in code:**
+  - This is especially common with multiple agents!
+  - This is also common with multiple versions of RAG applications and other models.
+  - **Being able to have registered version control in the same place that you would do testing, tracing, and observability is paramount to understanding your application end-to-end.**
+
+```
+prompt_assistant = "You are a helpful assistant. Answer: {question}"
+prompt_repond = "You are helpful. Respond to: {question}"  # Which one works better?
+prompt_qa = "Answer {question}"  # Lost track of what works
+```
+- **Problems with hardcoded, scattered prompts:**
+
+```
+❌ Prompts hardcoded in multiple places
+❌ No version history
+❌ Hard to A/B test different versions
+❌ Difficult to collaborate
+❌ Can't track which prompt generated which output
+```
+
+---
+### The Solution: MLflow Prompt Registry -- Centralized, versioned prompts in the Prompt Registry
+- With this code block you can do this simply:
+
+```
+prompt = mlflow.genai.register_prompt(
+    name="my-qa-prompt",
+    template="You are a helpful assistant. Answer: {{ question }}",
+    commit_message="Initial version"
+)
+```
+
+- This allows you to do the following:
+```
+# ✅ Version prompts automatically
+# ✅ Load by name, version, or alias
+# ✅ Share with team
+# ✅ Search across your organization
+```
+### Benefits of Prompt Registry:
+1. **Reproducibility: Know exactly which prompt was used**
+2. **Collaboration: Share prompts across team**
+3. **Experimentation: Systematic A/B testing**
+4. **Version Control: Track prompt evolution with commit messages**
+5. **Data Governance: Audit and approval processes via aliases**
