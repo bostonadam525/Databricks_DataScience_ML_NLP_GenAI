@@ -383,7 +383,7 @@ prompt = mlflow.genai.register_prompt(
 - Evaluation tells you how well it did it — whether, given a query or task, it behaved as expected.
 - Rigorous, repeated evals are table stakes for any agent, both in development and in production, and they address a range of challenges.
 
-
+|---|---|
 |Challenge|Solution|
 |Non-deterministic outputs|Evaluation over multiple runs|
 |Complex reasoning chains|Step-by-step quality assessment|
