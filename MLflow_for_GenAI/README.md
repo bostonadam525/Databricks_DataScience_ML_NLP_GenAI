@@ -377,3 +377,32 @@ prompt = mlflow.genai.register_prompt(
 4. Fill template with prompt
 5. Call LLM and test prompt
 
+---
+# Why should you evaluate Agents?
+- Traces tell you what the agent did
+- Evaluation tells you how well it did it — whether, given a query or task, it behaved as expected.
+- Rigorous, repeated evals are table stakes for any agent, both in development and in production, and they address a range of challenges.
+
+
+|Challenge|Solution|
+|Non-deterministic outputs|Evaluation over multiple runs|
+|Complex reasoning chains|Step-by-step quality assessment|
+|Multi-turn conversations|Session-level coherence metrics|
+|Safety and compliance|Automated guardrail checking|
+
+
+# LLM-as-Judge Pattern
+- Instead of using brittle string matching, we can use an LLM to evaluate LLM outputs:
+```
+Agent Output → Judge LLM → Score + Reasoning
+```
+<img width="960" height="540" alt="image" src="https://github.com/user-attachments/assets/15d9e8ca-2d0e-457e-be69-e87a50544bd0" />
+
+
+```
+## Out of the box, MLflow provides:
+1. Built-in scorers — pre-configured judges for common metrics
+2. Custom scorers — define your own evaluation logic
+3. Third-party integrations — DeepEval, RAGAS, Phoenix, TruLens, and more
+
+- MLflow provides 60+ scorers: https://mlflow.org/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined/
