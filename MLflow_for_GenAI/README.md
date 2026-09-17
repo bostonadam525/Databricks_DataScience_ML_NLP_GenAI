@@ -407,3 +407,52 @@ Agent Output → Judge LLM → Score + Reasoning
 3. Third-party integrations — DeepEval, RAGAS, Phoenix, TruLens, and more
 
 - MLflow provides 60+ scorers: https://mlflow.org/docs/latest/genai/eval-monitor/scorers/llm-judge/predefined/
+
+---
+# Prompt Optimization with DSPy GEPA in MLflow
+- mlflow docs: https://mlflow.org/prompt-optimization
+- mlflow gepa: https://mlflow.org/docs/latest/genai/prompt-registry/optimize-prompts/
+
+
+## Step 1: How GEPA Works
+
+**GEPA (Genetic-Pareto)** optimizes prompts through an iterative cycle:
+
+```
+1. EVALUATE  →  Run the prompt on training examples, score with a judge
+2. REFLECT   →  Use an LLM to analyze failures and propose improvements
+3. MUTATE    →  Generate improved prompt variations
+4. SELECT    →  Keep the best-performing candidates (Pareto-optimal)
+5. REPEAT    →  Continue until budget exhausted or convergence
+```
+
+### Manual vs. Automatic Optimization
+
+| Approach | Method | Effort | Consistency |
+|----------|--------|--------|-------------|
+| **Manual** (Notebook 1.5) | Human writes better prompts | High | Variable |
+| **GEPA** (This notebook) | Algorithm evolves prompts | Low | Systematic |
+
+### Integration with Prompt Registry
+
+GEPA works directly with MLflow's Prompt Registry:
+- **Reads** your registered prompt as the starting point
+- **Optimizes** it through the evaluate-reflect-mutate cycle
+- **Registers** the improved version automatically as a new version
+
+> **Note:** GEPA requires the `gepa` package. Install it with: `pip install gepa`
+---
+## Step 2: Setup env
+
+---
+## Step 3: Register baseline prompt in mlflow
+
+---
+## Step 4: Prepare Training Data, Scorer, and Predict Function
+- **GEPA needs three things:**
+
+1. **Training data** — example input/output pairs so it can evaluate prompt quality
+2. **Scorer** — a function that scores how well the output matches expectations
+3. **Predict function** — a callable that loads the prompt, fills it, and calls the LLM
+
+   
