@@ -51,4 +51,4 @@
 # Resources
 - [Benchmarking + Load Testing Agents](https://github.com/RamVegiraju/benchmark-agents)
 - [How to Load Test AI Agents Before Going to Production](https://www.agentcenter.cloud/blogs/how-to-load-test-ai-agents)
-- 
+- [Load Testing AI Agents - YouTube](https://www.youtube.com/watch?v=GaNRwzE6oaE&list=PLThJtS7RDkOdJ03O8kG7UA0UI3qsVY4sB&index=3)
